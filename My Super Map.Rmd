@@ -1,0 +1,33 @@
+---
+title: "NYC Borough Populations"
+author: "yagnesh0"
+date: "12/8/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(leaflet)
+```
+
+## New York City's Boroughs
+
+This webpage shows off the popuplation of the boroughs of New York City. Built for a Coursera Project.  Population data was gathered from here: <https://www.citypopulation.de/php/usa-newyorkcity.php>.
+
+```{r data}
+df <- data.frame(borough = c('Bronx','Brooklyn','Manhattan','Queens','Staten Island'),
+                 lat = c(40.8448,40.6782,40.7831,40.7282,40.5795),
+                 lng = c(-73.8648,-73.9442,-73.9712,-73.7949,-74.1502),
+                 pop = c(1455720, 2629150, 1643734, 2333054, 476015),
+                 stringsAsFactors = F
+                 )
+```
+
+```{r map}
+df %>%
+    leaflet() %>%
+    addTiles() %>%
+    addCircleMarkers(popup = paste0(df$borough,": ",df$pop),radius = sqrt(df$pop)/50)
+```
+
+
